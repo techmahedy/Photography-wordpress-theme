@@ -1,0 +1,98 @@
+
+$rem-base-font: 16px;
+@function em($px, $base: $base-font-size) {
+    @return ($px / $base) * 1em;
+}
+
+
+@mixin em($font-size, $spacing, $line-height: 0) {
+  font-size: ($font-size / $rem-base-font) * 1rem;
+  line-height: ($line-height / $font-size) * 1;
+  letter-spacing: ($spacing / 1000) * 1em;
+}
+
+@mixin appearance {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+    &::-webkit-inner-spin-button { 
+      -webkit-appearance: none;
+      cursor:pointer;
+      display:block;
+      width:8px;
+      color: #333;
+      text-align:center;
+      position:relative;
+  }
+}
+
+@mixin coverbg {
+  background-repeat: no-repeat !important;
+  background-position: 50% 50% !important;
+  -webkit-background-size: cover !important;
+  -moz-background-size: cover !important;
+  -o-background-size: cover !important;
+  background-size: cover !important;
+}
+
+@mixin align-center($type: 'all') {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+
+  // all
+  @if $type == 'all' {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    
+  // horizontal
+  } @else if $type == 'horizontal' {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+
+  // vertical
+  } @else if $type == 'vertical' {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+  // vertical
+  } @else if $type == 'bottom' {
+    -webkit-box-align: end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+  }
+}
+
+@mixin placeholder($color,$font_size, $font_weight ) {
+  &::-webkit-input-placeholder {
+    color: $color;
+    font-size: $font_size;
+    font-weight: $font_weight;
+    font-family: $mon;
+  }
+  &::-moz-placeholder { 
+    color: $color;
+    font-size: $font_size;
+    font-weight: $font_weight;
+    font-family: $mon;
+  }
+  &:-ms-input-placeholder { 
+    color: $color;
+    font-size: $font_size;
+    font-weight: $font_weight;
+    font-family: $mon;
+  }
+  &:-moz-placeholder { 
+    color: $color;
+    font-size: $font_size;
+    font-weight: $font_weight;
+    font-family: $mon;
+  }
+}

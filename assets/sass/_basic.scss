@@ -1,0 +1,151 @@
+/***********************************
+BASIC WORDPRESS STYLES
+***********************************/
+.alignleft {
+	display: inline;
+	float: left;
+	margin-right: 1.5em;
+}
+
+.alignright {
+	display: inline;
+	float: right;
+	margin-left: 1.5em;
+}
+
+.aligncenter {
+	clear: both;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/***********************************
+BASIC TEMPLATE STYLES
+***********************************/
+.basic_container { 
+	padding: 40px 0 48px 0;
+
+	.btn {
+		display: flex;
+		justify-content: center;
+		align-content: center;
+		flex-direction: column;	
+		text-align: center;
+		text-decoration: none !important;
+		//padding:20px 0;
+	}
+}
+
+.basic { 
+	max-width: 1008px; 
+	margin: 0 auto; 
+	padding: 35px 0;
+
+	h2 { 
+		margin-bottom: 35px; 
+	}
+
+	ul { 
+		margin-left: 30px; 
+		list-style-type: disc;
+
+		li { 
+			margin-bottom: 15px; 
+		}
+	}
+
+	p {
+
+		&:last-child { 
+			margin-bottom: 25px; 
+		}
+	}
+}
+
+/* left */
+.basic_left {
+
+	img { 
+		max-width: 100%; 
+		display: block; 
+		float: left; 
+	}
+
+	p { 
+		display: block; 
+		padding: 0;
+	}
+} 
+
+/* middle */
+.middle_box { 
+	padding: 0 15px; 
+}
+
+.basic_middle {
+
+	img {
+		max-width: 100%;  
+		display: block; 
+		float: none; 
+		margin: 0 auto 50px auto; 
+		max-width: 1008px; 
+		max-width: 100%;
+	}
+
+	h2 { 
+		text-align: center; 
+	}
+
+	p { 
+		margin-bottom: 0 !important; 
+		margin: 10px 0; 
+		-webkit-columns: 2; 
+		-moz-columns: 2; 
+		columns: 2; 
+		-webkit-column-gap: 50px; 
+		-moz-column-gap: 50px; 
+		column-gap: 50px;
+	}
+
+	.btn { 
+		//max-width: 490px; 
+		float: none; 
+		margin: 25px auto 0 auto; 
+	}
+}
+
+.basic_single {
+
+	.btn { 
+		//max-width: 490px; 
+		float: none; 
+		margin: 25px auto 0 auto; 
+	}
+}
+
+/* right */
+.basic_right {
+
+	img {
+		max-width: 100%; 
+		display: block; 
+		float: right; 
+		margin: 0 auto; 
+	}
+
+	p { 
+		display: block;
+		padding: 0; 
+	}
+}
+
+.gcbase-home{
+	width:100%;
+	background: #008cc6;
+	background: -moz-linear-gradient(45deg, #008cc6 0%, #8ec652 100%);
+	background: -webkit-linear-gradient(45deg, #008cc6 0%,#8ec652 100%);
+	background: linear-gradient(45deg, #008cc6 0%,#8ec652 100%); 
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008cc6', endColorstr='#8ec652',GradientType=1 );
+}

@@ -1,1 +1,2 @@
-# Photography wordpress theme
+# photographer
+   
