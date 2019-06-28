@@ -712,7 +712,78 @@ add_action('keenshot_gallery_page_template_content','keenshot_gallery_page_templ
 
 if(!function_exists('keenshot_gallery_page_template_content_section')):
 function keenshot_gallery_page_template_content_section(){
+    global $post;
+?>
+ <!-- begin portfolios-page -->
+ <section class="portfolios">
+        <div class="filter-menu">
+
+   <?php  $terms = get_terms('cat');   ?>
+
+            <ul class="hidden-xs">
+                <li class="mixitup-control-active szdfsa" data-filter="*"><?php _e('All', 'keenshot'); ?></li>
+                <?php foreach ($terms as $term): ?>
+                <li data-filter=".<?php echo strtolower(isset($term->name) ? $term->name : ''); ?>"><?php echo (isset($term->name)) ? $term->name : ''; ?></li>
+                <?php endforeach; ?>
+            </ul>
+
+            <div class="mobile-filter visible-xs">
+                <select name="" id="FilterSelect">
+                <option value="all"><?php _e('All', 'keenshot'); ?></option>
+                <?php foreach ($terms as $term): ?>
+                    <option value=".<?php echo strtolower(isset($term->name) ? $term->name : ''); ?>"><?php echo $term->name; ?></option>
+                <?php endforeach; ?>
+                </select>
+            </div>
+    
+        </div>
+  <?php
+    $terms = get_terms('cat');
+    $cats = array();
+    foreach ($terms as $term){
+       $cats[] = isset($term->name) ? $term->name : '';
+    }
+          $mypost = array(
+                     'post_type' => 'gallery', 
+                     'posts_per_page' => -1,
+                     'post_status' => 'publish',
+                     'tax_query' => array(
+                         array(
+                             'taxonomy' => 'cat',
+                             'field' => 'slug',
+                             'terms' => $cats
+                         )
+                     )
+                  );
+    $loop = new WP_Query( $mypost );
+    ?>
   
+
+        <div class="filter-content">
+            <h1><?php echo apply_filters( 'keenshot_pricint_title_filter', __('Gallery', 'keenshot')); ?></h1>
+            <div class="portfolio-images">
+                <?php while ( $loop->have_posts() ) : $loop->the_post();?>
+
+                    <?php $terms = wp_get_post_terms($post->ID, 'cat');
+                            foreach ($terms as $term):
+                    ?>
+
+    <div class="item mix <?php echo strtolower(isset($term->name) ? $term->name : ''); ?>">
+                     
+                   <?php the_post_thumbnail(array( 378, 378 )); ?>
+                </div>
+             <?php 
+                 endforeach;
+                 endwhile; 
+                 wp_reset_query();
+             ?>
+            </div>
+        </div>
+    </section><!--  /end of portfolios-page -->
+
+    <!-- begin footer -->
+
+<?php
 }
 endif;
 
@@ -723,7 +794,75 @@ add_action('keenshot_pricing_page_template_content','keenshot_pricing_page_templ
 
 if(!function_exists('keenshot_pricing_page_template_content_section')):
 function keenshot_pricing_page_template_content_section(){
+    global $post;
+?>  
+<section class="page-banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            <h1><?php echo apply_filters( 'keenshot_pricint_title_filter', __('Pricing', 'keenshot')); ?></h1>
+            </div>
+        </div>
+    </div>
+</section><!--  /end of page-banner -->
+
+<!-- begin pricing-page -->
+<section class="pricing-page">
+    <div class="container">
+<?php
+$terms = get_terms('cat');
+foreach ($terms as $term):
+   $cats = isset($term->name) ? $term->name : '';
+   $currentID = $term->term_id;
+      $query = array(
+                 'post_type' => 'gallery',
+                 'post_status' => 'publish',
+                 'posts_per_page' => 1,
+                 'tax_query' => array(
+                        array(
+                           'taxonomy' => 'cat',
+                           'field' => 'slug',
+                           'terms' => $cats
+                         )
+                      ),
+                  );
+  $loop = new WP_Query($query);
   
+while ( $loop->have_posts() ) : $loop->the_post();
+?>
+        <div class="pricing-item-wrapper">
+            <div class="media">
+               <a href="<?php the_permalink(); ?>">
+                   <?php the_post_thumbnail(array( 378, 378 )); ?> 
+               </a>
+            </div>
+
+            <div class="pricing align-center">
+                <div class="pricing-meta">
+                    <h1>$<?php echo get_post_meta($post->ID,'price',true); ?></h1>
+                    <p>
+                    <?php echo get_post_meta($post->ID,'description',true); ?>
+                    </p>
+                    <a class="btn" href="<?php echo esc_url( keenshot_get_page_template_link( 'page-templates/contact.php' )); ?>">Order Plan</a>
+                </div>
+               
+            <?php $terms = wp_get_post_terms($post->ID, 'cat');
+                   foreach ($terms as $term):
+             ?>
+                <div class="category">
+                    <h1><?php echo isset($term->name) ? $term->name : ''; ?></h1>
+                </div>
+            <?php  endforeach; ?>
+            </div>
+        </div><!--  /item wrapper -->
+          <?php 
+             endwhile; 
+             endforeach;
+             wp_reset_query();
+         ?>
+    </div>
+</section><!--  /end of pricing-page -->
+<?php
 }
 endif;
 
@@ -734,7 +873,69 @@ add_action('keenshot_taxonomy_content','keenshot_taxonomy_content_section');
 
 if(!function_exists('keenshot_taxonomy_content_section')):
 function keenshot_taxonomy_content_section(){
-   
+      global $post;
+?> 
+
+<?php 
+    $terms = get_terms('cat');
+      $i = 0;
+        foreach ($terms as $term):
+          $cats = isset($term->name) ? $term->name : '';
+          $query = array(
+                     'post_type' => 'gallery',
+                     'post_status' => 'publish',
+                     'posts_per_page' => 1,
+                     'tax_query' => array(
+                            array(
+                               'taxonomy' => 'cat',
+                               'field' => 'slug',
+                               'terms' => $cats
+                             )
+                          ),
+                      );
+      
+      $loop = new WP_Query($query);
+         $i = $i+1;
+   ?>
+<section class="photography-services">
+ <div class="service-item" <?php echo $i%2!=0 ? 'style="color: #f4f0fe"' : 'style="color: #18122a"'; ?>>
+      <div class="container">
+      <?php 
+        if($loop->have_posts() ):
+         while ($loop->have_posts() ): 
+            $loop->the_post();
+        ?>
+    <div class="row align-center <?php echo $i%2!=0 ? '' : 'reverse';?>">
+    
+                    <div class="col-md-6 col-sm-6 col-xs-12 bg-media-wrapper">
+                        <div class="bg-media" style="color: #dedae8">
+                            <?php the_post_thumbnail(array( 378, 378 )); ?>
+                        </div>
+                        
+                        <div class="view-all">
+                            <a class="text-uppercase" target="_blank" href="<?php echo esc_url( keenshot_get_page_template_link( 'page-templates/gallery.php' )); ?>"><?php echo apply_filters( 'keenshot_taxonomy_button_filter', __('View all','keenshot') ); ?></a>
+                        </div>
+                    </div>
+                    
+                     <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="service-meta">
+                          <?php $terms = wp_get_post_terms($post->ID, 'cat');
+                              foreach ($terms as $term):
+                           ?>
+                            <p class="title"><?php echo isset($term->name) ? $term->name : ''; ?> <?php _e('Photography','keenshot'); ?></p>
+                          <?php endforeach; ?>
+                            <p><?php echo get_post_meta($post->ID,'description',true); ?></p>
+                            <a style="color: #7b62d8" class="cta-btn" href="/contact"><?php echo apply_filters( 'keenshot_taxonomy_button', __('Get a quote for your','keenshot') ); ?> <?php echo $term->name; ?></a>
+                        </div>
+                    </div>
+              </div>
+     <?php endwhile; endif; wp_reset_postdata(); ?>
+       </div><!--  / container -->
+</div><!--  / services item -->
+</section>
+<?php endforeach; ?>
+
+<?php 
 }
 endif;
 
